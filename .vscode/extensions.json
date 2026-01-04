@@ -3,6 +3,7 @@
         "htmlhint.vscode-htmlhint",
         "stylelint.vscode-stylelint",
         "dbaeumer.vscode-eslint",
-        "ritwickdey.liveserver"
+        "ritwickdey.liveserver",
+        "chromedevtools.vscode-edge-devtools"
     ]
 }
