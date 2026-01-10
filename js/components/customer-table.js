@@ -141,7 +141,7 @@ class CustomerTable extends HTMLElement {
     async saveCustomer(customerId) {
         const form = document.getElementById('edit-customer-form');
         const inputs = form.querySelectorAll('form-text-input');
-        
+
         const customerData = {};
         inputs.forEach(input => {
             customerData[input.getAttribute('name')] = input.value;
@@ -198,7 +198,7 @@ class CustomerTable extends HTMLElement {
     render() {
         if (this.loading) {
             this.innerHTML = `
-        <div class="ui segment">
+        <div class="ui segment" role="status" aria-live="polite" aria-atomic="true">
           <div class="ui active inverted dimmer">
             <div class="ui text loader">Loading customers...</div>
           </div>
@@ -210,7 +210,7 @@ class CustomerTable extends HTMLElement {
 
         if (this.error) {
             this.innerHTML = `
-        <div class="ui negative message">
+        <div class="ui negative message" role="alert" aria-live="assertive">
           <div class="header">Error Loading Customers</div>
           <p>${this.error}</p>
         </div>
@@ -220,7 +220,7 @@ class CustomerTable extends HTMLElement {
 
         if (!this.customers || this.customers.length === 0) {
             this.innerHTML = `
-        <div class="ui info message">
+        <div class="ui info message" role="status" aria-live="polite">
           <div class="header">No Customers Found</div>
           <p>There are no customers in the system.</p>
         </div>
@@ -230,15 +230,15 @@ class CustomerTable extends HTMLElement {
 
         this.innerHTML = `
       <div class="ui segment">
-        <table class="ui celled striped table">
+        <table class="ui celled striped table" role="table" aria-label="Customer list">
           <thead>
             <tr>
-              <th><i class="hashtag icon"></i>Customer ID</th>
-              <th><i class="building icon"></i>Company Name</th>
-              <th><i class="user icon"></i>Contact Name</th>
-              <th><i class="map marker alternate icon"></i>City</th>
-              <th><i class="globe icon"></i>Country</th>
-              <th class="center aligned"><i class="cog icon"></i>Actions</th>
+              <th scope="col"><i class="hashtag icon" aria-hidden="true"></i>Customer ID</th>
+              <th scope="col"><i class="building icon" aria-hidden="true"></i>Company Name</th>
+              <th scope="col"><i class="user icon" aria-hidden="true"></i>Contact Name</th>
+              <th scope="col"><i class="map marker alternate icon" aria-hidden="true"></i>City</th>
+              <th scope="col"><i class="globe icon" aria-hidden="true"></i>Country</th>
+              <th scope="col" class="center aligned"><i class="cog icon" aria-hidden="true"></i>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -254,11 +254,11 @@ class CustomerTable extends HTMLElement {
                 <td>${customer.city || 'N/A'}</td>
                 <td>${customer.country || 'N/A'}</td>
                 <td class="center aligned">
-                  <button class="ui small primary button edit-btn" data-id="${customer.customerId}">
-                    <i class="edit icon"></i>Edit
+                  <button type="button" class="ui small primary button edit-btn" data-id="${customer.customerId}" aria-label="Edit ${customer.customerName || 'customer'}">
+                    <i class="edit icon" aria-hidden="true"></i>Edit
                   </button>
-                  <button class="ui small red button delete-btn" data-id="${customer.customerId}">
-                    <i class="trash icon"></i>Delete
+                  <button type="button" class="ui small red button delete-btn" data-id="${customer.customerId}" aria-label="Delete ${customer.customerName || 'customer'}">
+                    <i class="trash icon" aria-hidden="true"></i>Delete
                   </button>
                 </td>
               </tr>
@@ -266,7 +266,7 @@ class CustomerTable extends HTMLElement {
           </tbody>
         </table>
         <div class="ui label">
-          <i class="database icon"></i>
+          <i class="database icon" aria-hidden="true"></i>
           Showing ${this.customers.length} customers
         </div>
       </div>

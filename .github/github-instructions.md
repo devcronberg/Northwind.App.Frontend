@@ -1,57 +1,59 @@
-# AI Instructions: Northwind Frontend
+# AI Instruktioner: Northwind Frontend
 
-## Project Overview
+## Projektoversigt
 
-**Purpose**: Educational demo frontend using vanilla JavaScript, Web Components, and Fomantic UI.
+**Formål**: Pædagogisk demo-frontend ved brug af vanilla JavaScript, Web Components og Fomantic UI.
 
-**Key Constraints**:
-- ✅ Vanilla JavaScript only (ES6+ modules) - NO frameworks except Fomantic UI for styling
-- ✅ Web Components without Shadow DOM (for Fomantic UI compatibility)
-- ✅ English language only (code, comments, UI text)
-- ✅ Currency: USD (en-US locale)
-- ✅ **Zero Errors Policy**: No VS Code problems/warnings/errors allowed
+**Nøglebegrænsninger**:
+- ✅ Kun Vanilla JavaScript (ES6+ moduler) - INGEN frameworks undtagen Fomantic UI til styling
+- ✅ Web Components uden Shadow DOM (for Fomantic UI kompatibilitet)
+- ✅ Kun engelsk sprog (kode, kommentarer, UI-tekst)
+- ✅ Valuta: USD (en-US locale)
+- ✅ **Nul Fejl Politik**: Ingen VS Code problemer/advarsler/fejl tilladt
 
 ## Tech Stack
 
-- **UI Framework**: Fomantic UI 2.9.3 (CSS/components via CDN)
+- **UI Framework**: Fomantic UI 2.9.3 (CSS/komponenter via CDN)
 - **Backend API**: `https://northwind-backend-b088.onrender.com/api`
 - **Linters**: HTMLHint, Stylelint, ESLint (JS/JSON/Markdown/CSS)
-- **Package Manager**: NPM (dev dependencies only)
+- **Package Manager**: NPM (kun dev dependencies)
 
-## Project Structure
+## Projektstruktur
 
 ```text
-Northwind.App.Frontend.Simple/
+Northwind.App.Frontend/
 ├── .github/
-│   └── github-instructions.md          # This file
+│   └── github-instructions.md          # Denne fil
 ├── .vscode/
-│   └── extensions.json                 # Recommended VS Code extensions
+│   └── extensions.json                 # Anbefalede VS Code extensions
 ├── assets/
-│   └── favicon.svg                     # Site icon
+│   └── favicon.svg                     # Site-ikon
 ├── css/
-│   └── styles.css                      # Minimal custom styles (Fomantic handles most)
+│   └── styles.css                      # Minimale brugerdefinerede styles (Fomantic håndterer det meste)
 ├── js/
-│   ├── app.js                          # Main entry point
+│   ├── app.js                          # Hoved-indgangspunkt
 │   ├── components/
-│   │   ├── app-header.js               # Navigation header
+│   │   ├── app-header.js               # Navigations-header
 │   │   ├── app-footer.js               # Footer
-│   │   └── customer-revenue-table.js   # Customer data table
+│   │   ├── customer-revenue-table.js   # Kundedata-tabel (dashboard)
+│   │   ├── customer-table.js           # Kunde-tabel med CRUD
+│   │   └── form-text-input.js          # Genanvendelig formular-input
 │   └── config/
-│       └── settings.js                 # API configuration
-├── index.html                          # Main HTML file
-├── .eslintignore                       # Deprecated (use ignores in eslint.config.mjs)
-├── .htmlhintrc                         # HTML linting rules
-├── .stylelintrc.json                   # CSS linting rules
+│       └── settings.js                 # API-konfiguration
+├── index.html                          # Dashboard-side
+├── customers.html                      # Kundestyring-side
+├── .htmlhintrc                         # HTML linting regler
+├── .stylelintrc.json                   # CSS linting regler
 ├── eslint.config.mjs                   # ESLint flat config
-├── package.json                        # NPM scripts and dev dependencies
-└── .gitignore                          # Git ignore patterns
+├── package.json                        # NPM scripts og dev dependencies
+└── .gitignore                          # Git ignore mønstre
 ```
 
-## Component Architecture
+## Komponentarkitektur
 
-### Web Components Pattern
+### Web Components Mønster
 
-All components extend `HTMLElement` **without Shadow DOM** to allow Fomantic UI styling:
+Alle komponenter udvider `HTMLElement` **uden Shadow DOM** for at tillade Fomantic UI styling:
 
 ```javascript
 class MyComponent extends HTMLElement {
@@ -62,7 +64,7 @@ class MyComponent extends HTMLElement {
     render() {
         this.innerHTML = `
             <div class="ui segment">
-                <!-- Fomantic UI classes work here -->
+                <!-- Fomantic UI classes fungerer her -->
             </div>
         `;
     }
@@ -71,16 +73,18 @@ class MyComponent extends HTMLElement {
 customElements.define('my-component', MyComponent);
 ```
 
-**IMPORTANT**: 
-- NO Shadow DOM (`this.attachShadow()`)
-- Use `this.innerHTML` directly
-- Only define custom elements once (check for duplicate `customElements.define()`)
+**VIGTIGT**: 
+- INGEN Shadow DOM (`this.attachShadow()`)
+- Brug `this.innerHTML` direkte
+- Definer kun custom elements én gang (tjek for duplikeret `customElements.define()`)
 
-### Existing Components
+### Eksisterende Komponenter
 
-1. **app-header.js**: Blue inverted menu with shield icon, Customers/About links
-2. **app-footer.js**: Inverted footer segment with grid layout
-3. **customer-revenue-table.js**: Fetches `/api/public/customers-with-revenue`, renders Fomantic table with loading state
+1. **app-header.js**: Blå inverteret menu med skjold-ikon, Customers/About links
+2. **app-footer.js**: Inverteret footer-segment med grid layout
+3. **customer-revenue-table.js**: Henter `/api/public/customers-with-revenue`, renderer Fomantic tabel med loading state (bruges på dashboard)
+4. **customer-table.js**: Viser alle kunder med CRUD-operationer (create, read, update, delete)
+5. **form-text-input.js**: Genanvendelig formular-input komponent med label og validering
 
 ## API Integration
 
@@ -97,7 +101,11 @@ export const API_CONFIG = {
 ### Available Endpoints
 
 - `GET /api/public/customers-with-revenue` - Customer revenue data (no auth required)
-- Add more endpoints as needed
+- `GET /api/public/customers` - All customers
+- `GET /api/public/customers/{id}` - Specific customer
+- `POST /api/public/customers` - Create new customer
+- `PUT /api/public/customers/{id}` - Update customer
+- `DELETE /api/public/customers/{id}` - Delete customer
 
 ### Fetch Pattern
 
@@ -1524,29 +1532,352 @@ async function deleteCustomer(id) {
 
 ### 5. Accessibility (a11y)
 
+**CRITICAL: All interactive elements must be keyboard accessible and screen reader friendly**
+
+#### Accessibility Checklist
+
+- ✅ **Semantic HTML**: Use proper elements (`<button>`, `<nav>`, `<main>`, `<section>`)
+- ✅ **ARIA Labels**: Add `aria-label` or `aria-labelledby` to icon-only buttons
+- ✅ **Keyboard Navigation**: All interactive elements must be keyboard accessible
+- ✅ **Focus Management**: Visible focus indicators, logical tab order
+- ✅ **Form Labels**: All inputs must have associated `<label>` elements
+- ✅ **Alt Text**: All images must have descriptive `alt` attributes
+- ✅ **Color Contrast**: Minimum 4.5:1 for normal text, 3:1 for large text
+- ✅ **Screen Reader**: Test with NVDA, JAWS, or VoiceOver
+
+#### Semantic HTML
+
 ```html
-<!-- ✅ Good: Accessible -->
-<button aria-label="Delete customer" onclick="deleteCustomer('ALFKI')">
-  <svg aria-hidden="true">...</svg>
+<!-- ✅ Good: Semantic elements -->
+<nav aria-label="Main navigation">
+  <ul>
+    <li><a href="/">Dashboard</a></li>
+    <li><a href="/customers.html">Customers</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section aria-labelledby="customers-heading">
+    <h2 id="customers-heading">Customer List</h2>
+    <!-- Content -->
+  </section>
+</main>
+
+<!-- ❌ Bad: Non-semantic divs -->
+<div class="navigation">
+  <div><a href="/">Dashboard</a></div>
+  <div><a href="/customers.html">Customers</a></div>
+</div>
+
+<div>
+  <div class="heading">Customer List</div>
+  <!-- Content -->
+</div>
+```
+
+#### Buttons and Interactive Elements
+
+```html
+<!-- ✅ Good: Accessible buttons -->
+<button 
+  type="button"
+  aria-label="Edit customer Maria Anders"
+  onclick="handleEdit('ALFKI')">
+  <i class="edit icon" aria-hidden="true"></i>
 </button>
 
-<img src="logo.png" alt="Northwind Logo">
+<button 
+  type="button"
+  aria-label="Delete customer Maria Anders"
+  onclick="handleDelete('ALFKI')">
+  <i class="trash icon" aria-hidden="true"></i>
+</button>
 
+<!-- With text and icon -->
+<button type="button">
+  <i class="save icon" aria-hidden="true"></i>
+  Save Customer
+</button>
+
+<!-- ❌ Bad: Non-accessible -->
+<div onclick="handleEdit('ALFKI')">
+  <i class="edit icon"></i>
+</div>
+
+<a href="#" onclick="handleDelete('ALFKI')">
+  <i class="trash icon"></i>
+</a>
+```
+
+#### Form Accessibility
+
+```html
+<!-- ✅ Good: Accessible forms -->
 <form>
-  <label for="customer-name">Customer Name</label>
-  <input id="customer-name" type="text" required>
+  <div class="field">
+    <label for="customer-name">
+      Customer Name
+      <span aria-label="required">*</span>
+    </label>
+    <input 
+      id="customer-name" 
+      type="text" 
+      required
+      aria-required="true"
+      aria-invalid="false"
+      aria-describedby="name-error">
+    <span id="name-error" role="alert" class="error" style="display:none;">
+      Please enter a customer name
+    </span>
+  </div>
+
+  <div class="field">
+    <label for="contact-name">Contact Name</label>
+    <input 
+      id="contact-name" 
+      type="text"
+      placeholder="John Doe">
+  </div>
+
+  <button type="submit">
+    <i class="save icon" aria-hidden="true"></i>
+    Save Customer
+  </button>
 </form>
 
 <!-- ❌ Bad: Not accessible -->
-<div onclick="deleteCustomer('ALFKI')">
-  <svg>...</svg>
-</div>
-
-<img src="logo.png">
-
 <form>
   <input type="text" placeholder="Customer Name">
+  <input type="text" placeholder="Contact Name">
+  <div class="button">Save</div>
 </form>
+```
+
+#### Images and Icons
+
+```html
+<!-- ✅ Good: Descriptive alt text -->
+<img src="logo.png" alt="Northwind Traders Company Logo">
+<img src="chart.png" alt="Revenue chart showing 20% growth in Q4">
+
+<!-- Decorative images -->
+<img src="decoration.png" alt="" role="presentation">
+
+<!-- Icons in buttons (use aria-hidden) -->
+<button aria-label="Search customers">
+  <i class="search icon" aria-hidden="true"></i>
+</button>
+
+<!-- ❌ Bad: Missing or poor alt text -->
+<img src="logo.png">
+<img src="logo.png" alt="image">
+<img src="chart.png" alt="chart">
+```
+
+#### Loading States and Error Messages
+
+```html
+<!-- ✅ Good: Accessible loading and errors -->
+<div role="status" aria-live="polite" aria-atomic="true">
+  <div class="ui active dimmer">
+    <div class="ui loader"></div>
+    <span class="sr-only">Loading customers...</span>
+  </div>
+</div>
+
+<div role="alert" aria-live="assertive" class="ui negative message">
+  <i class="times circle icon" aria-hidden="true"></i>
+  <span>Error: Failed to load customers. Please try again.</span>
+</div>
+
+<div role="status" aria-live="polite" class="ui success message">
+  <i class="check circle icon" aria-hidden="true"></i>
+  <span>Customer saved successfully!</span>
+</div>
+
+<!-- CSS for screen reader only content -->
+<style>
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+</style>
+```
+
+#### Keyboard Navigation
+
+```javascript
+// ✅ Good: Keyboard support in components
+class CustomerTable extends HTMLElement {
+    attachEventListeners() {
+        // Handle keyboard events
+        this.querySelectorAll('button').forEach(button => {
+            button.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    button.click();
+                }
+            });
+        });
+
+        // Trap focus in modals
+        const modal = this.querySelector('.ui.modal');
+        if (modal) {
+            this.trapFocus(modal);
+        }
+    }
+
+    trapFocus(element) {
+        const focusableElements = element.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstFocusable = focusableElements[0];
+        const lastFocusable = focusableElements[focusableElements.length - 1];
+
+        element.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                if (e.shiftKey && document.activeElement === firstFocusable) {
+                    e.preventDefault();
+                    lastFocusable.focus();
+                } else if (!e.shiftKey && document.activeElement === lastFocusable) {
+                    e.preventDefault();
+                    firstFocusable.focus();
+                }
+            }
+        });
+    }
+}
+```
+
+#### Modal Dialog Accessibility
+
+```javascript
+// ✅ Good: Accessible modal implementation
+showModal() {
+    const modal = this.querySelector('.ui.modal');
+    
+    // Store previously focused element
+    this.previousFocus = document.activeElement;
+    
+    // Show modal with Fomantic UI
+    $(modal).modal({
+        onShow: () => {
+            // Set focus to first input or close button
+            const firstInput = modal.querySelector('input, button');
+            if (firstInput) firstInput.focus();
+            
+            // Add aria attributes
+            modal.setAttribute('role', 'dialog');
+            modal.setAttribute('aria-modal', 'true');
+            modal.setAttribute('aria-labelledby', 'modal-title');
+        },
+        onHidden: () => {
+            // Restore focus when closed
+            if (this.previousFocus) {
+                this.previousFocus.focus();
+            }
+        }
+    }).modal('show');
+}
+```
+
+#### Table Accessibility
+
+```html
+<!-- ✅ Good: Accessible table -->
+<table class="ui celled table" role="table" aria-label="Customer list">
+  <thead>
+    <tr>
+      <th scope="col">Customer ID</th>
+      <th scope="col">Company Name</th>
+      <th scope="col">Contact Name</th>
+      <th scope="col">Revenue</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ALFKI</td>
+      <td>Alfreds Futterkiste</td>
+      <td>Maria Anders</td>
+      <td>$15,000.00</td>
+      <td>
+        <button type="button" aria-label="Edit Alfreds Futterkiste">
+          <i class="edit icon" aria-hidden="true"></i>
+        </button>
+        <button type="button" aria-label="Delete Alfreds Futterkiste">
+          <i class="trash icon" aria-hidden="true"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+```
+
+#### Color Contrast
+
+```css
+/* ✅ Good: Sufficient contrast */
+:root {
+  /* Primary text: #000000 on #FFFFFF = 21:1 (AAA) */
+  --text-color: #000000;
+  --bg-color: #ffffff;
+  
+  /* Links: #0066cc on #FFFFFF = 8.59:1 (AAA) */
+  --link-color: #0066cc;
+  
+  /* Error: #d01919 on #FFFFFF = 5.78:1 (AA) */
+  --error-color: #d01919;
+}
+
+/* ❌ Bad: Insufficient contrast */
+:root {
+  /* #aaaaaa on #ffffff = 2.32:1 (Fails WCAG) */
+  --text-color: #aaaaaa;
+}
+```
+
+#### Testing Accessibility
+
+**Browser Tools:**
+```javascript
+// Check for accessibility issues in console
+// Install axe-core via CDN or npm
+<script src="https://cdn.jsdelivr.net/npm/axe-core@4.7.0/axe.min.js"></script>
+<script>
+  axe.run().then(results => {
+    if (results.violations.length) {
+      console.error('Accessibility violations:', results.violations);
+    } else {
+      console.log('No accessibility violations found!');
+    }
+  });
+</script>
+```
+
+**Manual Testing:**
+- Test with keyboard only (no mouse)
+- Test with screen reader (NVDA, JAWS, VoiceOver)
+- Check color contrast with browser DevTools
+- Verify focus indicators are visible
+- Test form validation with screen reader
+
+**Automated Testing:**
+```bash
+# Install axe-core for testing
+npm install --save-dev axe-core
+
+# Or use browser extensions:
+# - axe DevTools (Chrome/Firefox)
+# - WAVE (Chrome/Firefox)
+# - Lighthouse (Chrome DevTools)
 ```
 
 ### 6. Performance

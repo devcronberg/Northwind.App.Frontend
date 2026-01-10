@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Northwind Traders - Customer Management</title>
+    <meta name="description" content="Northwind Traders Customer Dashboard - View top performing customers by revenue">
+    <title>Northwind Traders - Customer Dashboard</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -21,20 +22,22 @@
     <app-header></app-header>
 
     <!-- Main Content -->
-    <main class="main-content">
+    <main class="main-content" role="main">
         <div class="ui container">
-            <div class="ui segment">
-                <h1 class="ui header">
-                    <i class="chart line icon"></i>
-                    <div class="content">
-                        Customer Dashboard
-                        <div class="sub header">Top performing customers by revenue</div>
-                    </div>
-                </h1>
-            </div>
+            <section aria-labelledby="dashboard-heading">
+                <div class="ui segment">
+                    <h1 id="dashboard-heading" class="ui header">
+                        <i class="chart line icon" aria-hidden="true"></i>
+                        <div class="content">
+                            Customer Dashboard
+                            <div class="sub header">Top performing customers by revenue</div>
+                        </div>
+                    </h1>
+                </div>
 
-            <!-- Customer Revenue Table Component -->
-            <customer-revenue-table limit="5"></customer-revenue-table>
+                <!-- Customer Revenue Table Component -->
+                <customer-revenue-table limit="5"></customer-revenue-table>
+            </section>
         </div>
     </main>
 

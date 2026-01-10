@@ -21,9 +21,8 @@ class AppFooter extends HTMLElement {
             </div>
             <div class="eight wide right aligned column">
               <div class="ui inverted link list">
-                <a href="#privacy" class="item">Privacy Policy</a>
-                <a href="#terms" class="item">Terms of Service</a>
-                <a href="#contact" class="item">Contact</a>
+                <a href="about.html" class="item">About</a>
+                <a href="https://github.com/devcronberg/Northwind.App.Frontend" class="item">Github</a>                
               </div>
             </div>
           </div>

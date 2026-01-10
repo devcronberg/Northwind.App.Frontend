@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About Northwind Traders - Educational demo application">
+    <title>Northwind Traders - About</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <!-- Fomantic UI CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- Header Component -->
+    <app-header></app-header>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+        <div class="ui container">
+            <section aria-labelledby="about-heading">
+                <div class="ui segment">
+                    <h1 id="about-heading" class="ui header">
+                        <i class="info circle icon" aria-hidden="true"></i>
+                        <div class="content">
+                            About This Application
+                            <div class="sub header">Educational demo application for learning web development</div>
+                        </div>
+                    </h1>
+                </div>
+
+                <div class="ui segment">
+                    <h2 class="ui header">
+                        <i class="graduation cap icon" aria-hidden="true"></i>
+                        <div class="content">Educational Purpose</div>
+                    </h2>
+                    <p class="ui text" style="font-size: 1.1em; line-height: 1.8;">
+                        This application is developed for educational purposes to demonstrate modern web development
+                        practices using vanilla JavaScript, Web Components, and Fomantic UI. It serves as a practical
+                        example for students learning frontend development fundamentals.
+                    </p>
+
+                    <div class="ui info message">
+                        <div class="header">
+                            <i class="lightbulb icon" aria-hidden="true"></i>
+                            Learning Focus
+                        </div>
+                        <ul class="list">
+                            <li>Vanilla JavaScript (ES6+ modules)</li>
+                            <li>Web Components without frameworks</li>
+                            <li>REST API integration</li>
+                            <li>Responsive design with Fomantic UI</li>
+                            <li>CRUD operations</li>
+                            <li>Accessibility best practices</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="ui segment">
+                    <h2 class="ui header">
+                        <i class="linkify icon" aria-hidden="true"></i>
+                        <div class="content">Resources</div>
+                    </h2>
+
+                    <div class="ui relaxed divided list">
+                        <div class="item">
+                            <i class="github large icon" aria-hidden="true"></i>
+                            <div class="content">
+                                <a href="https://github.com/devcronberg/Northwind.App.Frontend" target="_blank"
+                                    rel="noopener noreferrer" class="header">
+                                    GitHub Repository
+                                    <i class="external alternate icon" aria-hidden="true"></i>
+                                </a>
+                                <div class="description">Source code and documentation</div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <i class="book large icon" aria-hidden="true"></i>
+                            <div class="content">
+                                <a href="https://devcronberg.github.io/Northwind.App.Kursus/" target="_blank"
+                                    rel="noopener noreferrer" class="header">
+                                    Course Materials
+                                    <i class="external alternate icon" aria-hidden="true"></i>
+                                </a>
+                                <div class="description">Complete course documentation and tutorials</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui segment">
+                    <h2 class="ui header">
+                        <i class="code icon" aria-hidden="true"></i>
+                        <div class="content">Technology Stack</div>
+                    </h2>
+                    <div class="ui three stackable cards">
+                        <div class="card">
+                            <div class="content">
+                                <div class="header">Frontend</div>
+                                <div class="description">
+                                    <ul>
+                                        <li>HTML5</li>
+                                        <li>CSS3</li>
+                                        <li>JavaScript ES6+</li>
+                                        <li>Web Components</li>
+                                        <li>Fomantic UI</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="content">
+                                <div class="header">Backend</div>
+                                <div class="description">
+                                    <ul>
+                                        <li>ASP.NET Core</li>
+                                        <li>REST API</li>
+                                        <li>SQL Server</li>
+                                        <li>Northwind Database</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="content">
+                                <div class="header">Tools</div>
+                                <div class="description">
+                                    <ul>
+                                        <li>VS Code</li>
+                                        <li>ESLint</li>
+                                        <li>HTMLHint</li>
+                                        <li>Stylelint</li>
+                                        <li>GitHub Actions</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer Component -->
+    <app-footer></app-footer>
+
+    <!-- jQuery (required for Fomantic UI) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <!-- Fomantic UI JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
+
+    <!-- App Components -->
+    <script type="module" src="js/components/app-header.js"></script>
+    <script type="module" src="js/components/app-footer.js"></script>
+    <script type="module" src="js/app.js"></script>
+</body>
+
+</html>

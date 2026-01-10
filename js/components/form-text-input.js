@@ -73,19 +73,20 @@ class FormTextInput extends HTMLElement {
 
         this.innerHTML = `
       <div class="field ${required ? 'required' : ''}" style="margin-bottom: 1em;">
-        <label for="${name}">${label}</label>
+        <label for="${name}">${label}${required ? ' <span aria-label="required">*</span>' : ''}</label>
         <input 
           type="${inputType}"
           id="${name}"
           name="${name}"
           value="${value}"
           placeholder="${placeholder}"
-          ${required ? 'required' : ''}
+          ${required ? 'required aria-required="true"' : ''}
           ${minlength ? `minlength="${minlength}"` : ''}
           ${maxlength ? `maxlength="${maxlength}"` : ''}
           ${disabled ? 'disabled' : ''}
           ${readonly ? 'readonly' : ''}
           autocomplete="${autocomplete}"
+          aria-invalid="false"
         />
       </div>
     `;

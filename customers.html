@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Northwind Traders Customer Management - View, edit, and manage customer records">
     <title>Northwind Traders - Customers</title>
 
     <!-- Favicon -->
@@ -21,20 +22,22 @@
     <app-header></app-header>
 
     <!-- Main Content -->
-    <main class="main-content">
+    <main class="main-content" role="main">
         <div class="ui container">
-            <div class="ui segment">
-                <h1 class="ui header">
-                    <i class="users icon"></i>
-                    <div class="content">
-                        Customer Management
-                        <div class="sub header">View, edit, and manage customer records</div>
-                    </div>
-                </h1>
-            </div>
+            <section aria-labelledby="customers-heading">
+                <div class="ui segment">
+                    <h1 id="customers-heading" class="ui header">
+                        <i class="users icon" aria-hidden="true"></i>
+                        <div class="content">
+                            Customer Management
+                            <div class="sub header">View, edit, and manage customer records</div>
+                        </div>
+                    </h1>
+                </div>
 
-            <!-- Customer Table Component -->
-            <customer-table></customer-table>
+                <!-- Customer Table Component -->
+                <customer-table></customer-table>
+            </section>
         </div>
     </main>
 

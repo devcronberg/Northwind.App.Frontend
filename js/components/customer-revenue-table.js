@@ -65,7 +65,7 @@ class CustomerRevenueTable extends HTMLElement {
     renderContent() {
         if (this.loading) {
             return `
-        <div class="ui segment" style="min-height: 300px;">
+        <div class="ui segment" style="min-height: 300px;" role="status" aria-live="polite" aria-atomic="true">
           <div class="ui active inverted dimmer">
             <div class="ui large text loader">Loading customer data...</div>
           </div>
@@ -75,9 +75,9 @@ class CustomerRevenueTable extends HTMLElement {
 
         if (this.error) {
             return `
-        <div class="ui negative message">
+        <div class="ui negative message" role="alert" aria-live="assertive">
           <div class="header">
-            <i class="warning icon"></i>
+            <i class="warning icon" aria-hidden="true"></i>
             Error Loading Data
           </div>
           <p>${this.error}</p>
@@ -88,7 +88,7 @@ class CustomerRevenueTable extends HTMLElement {
 
         if (!this.customers || this.customers.length === 0) {
             return `
-        <div class="ui info message">
+        <div class="ui info message" role="status" aria-live="polite">
           <div class="header">No Data Available</div>
           <p>No customers found</p>
         </div>
@@ -96,13 +96,13 @@ class CustomerRevenueTable extends HTMLElement {
         }
 
         return `
-      <table class="ui celled striped table">
+      <table class="ui celled striped table" role="table" aria-label="Top customers by revenue">
         <thead>
           <tr>
-            <th><i class="hashtag icon"></i>Customer ID</th>
-            <th><i class="building icon"></i>Customer Name</th>
-            <th class="center aligned"><i class="shopping cart icon"></i>Order Count</th>
-            <th class="right aligned"><i class="dollar icon"></i>Total Revenue</th>
+            <th scope="col"><i class="hashtag icon" aria-hidden="true"></i>Customer ID</th>
+            <th scope="col"><i class="building icon" aria-hidden="true"></i>Customer Name</th>
+            <th scope="col" class="center aligned"><i class="shopping cart icon" aria-hidden="true"></i>Order Count</th>
+            <th scope="col" class="right aligned"><i class="dollar icon" aria-hidden="true"></i>Total Revenue</th>
           </tr>
         </thead>
         <tbody>
@@ -115,7 +115,7 @@ class CustomerRevenueTable extends HTMLElement {
                 <h4 class="ui header">
                   <div class="content">
                     ${item.customer.customerName || 'N/A'}
-                    ${item.customer.country ? `<div class="sub header"><i class="map marker alternate icon"></i>${item.customer.country}</div>` : ''}
+                    ${item.customer.country ? `<div class="sub header"><i class="map marker alternate icon" aria-hidden="true"></i>${item.customer.country}</div>` : ''}
                   </div>
                 </h4>
               </td>
@@ -132,7 +132,7 @@ class CustomerRevenueTable extends HTMLElement {
           <tr>
             <th colspan="4" class="center aligned">
               <div class="ui label">
-                <i class="users icon"></i>
+                <i class="users icon" aria-hidden="true"></i>
                 Showing ${this.customers.length} customers
               </div>
             </th>
