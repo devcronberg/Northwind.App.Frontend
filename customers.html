@@ -41,6 +41,9 @@
                             <div class="sub header">View, edit, and manage customer records</div>
                         </div>
                     </h1>
+                    <button type="button" class="ui primary button" id="create-customer-btn" aria-label="Create new customer">
+                        <i class="plus icon" aria-hidden="true"></i>Create Customer
+                    </button>
                 </div>
 
                 <!-- Customer Table Component -->
@@ -63,6 +66,21 @@
     <script type="module" src="js/components/form-text-input.js"></script>
     <script type="module" src="js/components/customer-table.js"></script>
     <script type="module" src="js/app.js"></script>
+    
+    <!-- Initialize Create Customer Button -->
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            const createBtn = document.getElementById('create-customer-btn');
+            if (createBtn) {
+                createBtn.addEventListener('click', () => {
+                    const customerTable = document.querySelector('customer-table');
+                    if (customerTable) {
+                        customerTable.handleEditOrCreate(null, 'create');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

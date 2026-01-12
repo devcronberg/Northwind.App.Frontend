@@ -43,15 +43,34 @@ class CustomerTable extends HTMLElement {
         }
     }
 
-    handleEdit(customerId) {
-        console.log('handleEdit called for customer:', customerId, typeof customerId);
-        // Convert to number since data-id is string but API returns numbers
-        const customerIdNum = parseInt(customerId, 10);
-        const customer = this.customers.find(c => c.customerId === customerIdNum);
-        console.log('Customer found:', customer);
-        if (!customer) {
-            console.error('Customer not found!');
-            return;
+    handleEditOrCreate(customerId = null, mode = 'edit') {
+        console.log('handleEditOrCreate called:', { customerId, mode });
+        
+        let customer = null;
+        if (mode === 'edit') {
+            // Convert to number since data-id is string but API returns numbers
+            const customerIdNum = parseInt(customerId, 10);
+            customer = this.customers.find(c => c.customerId === customerIdNum);
+            console.log('Customer found:', customer);
+            if (!customer) {
+                console.error('Customer not found!');
+                return;
+            }
+        } else {
+            // Create mode - initialize empty customer
+            customer = {
+                customerId: '',
+                customerName: '',
+                contactName: '',
+                contactTitle: '',
+                address: '',
+                city: '',
+                region: '',
+                postalCode: '',
+                country: '',
+                phone: '',
+                fax: ''
+            };
         }
 
         // Create modal if it doesn't exist
@@ -65,18 +84,25 @@ class CustomerTable extends HTMLElement {
             console.log('Modal created and appended to body');
         }
 
+        const isEditMode = mode === 'edit';
+        const modalTitle = isEditMode ? 'Edit Customer' : 'Create Customer';
+        const modalIcon = isEditMode ? 'edit' : 'plus';
+        const customerIdFieldStyle = isEditMode ? '' : 'display: none;';
+        
         console.log('About to populate modal innerHTML');
         try {
             // Populate modal with form
             modal.innerHTML = `
             <i class="close icon"></i>
             <div class="header">
-                <i class="edit icon"></i>
-                Edit Customer
+                <i class="${modalIcon} icon"></i>
+                ${modalTitle}
             </div>
             <div class="content">
                 <div class="ui form" id="edit-customer-form">
-                    <form-text-input label="Customer ID" name="customerId" value="${customer.customerId}" readonly></form-text-input>
+                    <div style="${customerIdFieldStyle}">
+                        <form-text-input label="Customer ID" name="customerId" value="${customer.customerId}" readonly></form-text-input>
+                    </div>
                     <form-text-input label="Company Name" name="customerName" value="${customer.customerName || ''}" required maxlength="40"></form-text-input>
                     <form-text-input label="Contact Name" name="contactName" value="${customer.contactName || ''}" maxlength="30"></form-text-input>
                     <form-text-input label="Contact Title" name="contactTitle" value="${customer.contactTitle || ''}" maxlength="30"></form-text-input>
@@ -120,7 +146,11 @@ class CustomerTable extends HTMLElement {
                     closable: false,
                     autofocus: false,
                     onApprove: () => {
-                        this.saveCustomer(customerId);
+                        if (mode === 'edit') {
+                            this.saveCustomer(customerId);
+                        } else {
+                            this.createCustomer();
+                        }
                         return false; // Prevent closing until save completes
                     },
                     onShow: () => {
@@ -167,6 +197,42 @@ class CustomerTable extends HTMLElement {
         } catch (error) {
             console.error('Error saving customer:', error);
             alert(`Error saving customer: ${error.message}`);
+        }
+    }
+
+    async createCustomer() {
+        const form = document.getElementById('edit-customer-form');
+        const inputs = form.querySelectorAll('form-text-input');
+
+        const customerData = {};
+        inputs.forEach(input => {
+            const name = input.getAttribute('name');
+            // Skip customerId field for create
+            if (name !== 'customerId') {
+                customerData[name] = input.value;
+            }
+        });
+
+        try {
+            const response = await fetch(`${API_CONFIG.BASE_URL}/public/customers`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(customerData),
+                signal: AbortSignal.timeout(API_CONFIG.TIMEOUT)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            // Close modal and refresh data
+            $('#edit-customer-modal').modal('hide');
+            this.fetchCustomers();
+        } catch (error) {
+            console.error('Error creating customer:', error);
+            alert(`Error creating customer: ${error.message}`);
         }
     }
 
@@ -278,7 +344,7 @@ class CustomerTable extends HTMLElement {
                 e.preventDefault();
                 e.stopPropagation();
                 const customerId = e.currentTarget.getAttribute('data-id');
-                this.handleEdit(customerId);
+                this.handleEditOrCreate(customerId, 'edit');
             });
         });
 
