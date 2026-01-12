@@ -1,7 +1,7 @@
 // Minimal Service Worker for PWA installation
 // No caching or offline functionality
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', () => {
     console.log('Service Worker: Installed');
     self.skipWaiting();
 });

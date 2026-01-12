@@ -4,12 +4,13 @@ En moderne vanilla JavaScript frontend-applikation, der demonstrerer bedste prak
 
 ## 🌟 Funktioner
 
+- ✅ **Progressive Web App (PWA)** - Installerbar på desktop og mobile enheder
 - ✅ **Web-komponenter** - Genanvendelige brugerdefinerede elementer uden frameworks
 - ✅ **Vanilla JavaScript** - Ingen framework-afhængigheder, kun moderne ES6+
 - ✅ **Responsivt Design** - Fomantic UI til konsekvent styling
 - ✅ **API-integration** - REST API-klient til Northwind backend
 - ✅ **Kunde Dashboard** - Top-kunder sorteret efter omsætning
-- ✅ **Kundestyring** - CRUD-operationer for kunder
+- ✅ **Kundestyring** - Komplet CRUD-operationer for kunder (Create, Read, Update, Delete)
 - ✅ **Kodekvalitetsværktøjer** - ESLint, HTMLHint og Stylelint
 - ✅ **Modulær Arkitektur** - Organiseret komponentstruktur
 
@@ -80,10 +81,17 @@ Naviger til: `http://localhost:8080`
 Northwind.App.Frontend/
 ├── index.html                    # Dashboard-side
 ├── customers.html                # Kundestyring-side
+├── about.html                    # Om-side
+├── manifest.json                 # PWA web app manifest
+├── sw.js                         # Service worker (minimal, ingen cache)
 ├── package.json                  # NPM-afhængigheder og scripts
 ├── eslint.config.mjs             # ESLint-konfiguration
 ├── assets/
-│   └── favicon.svg               # App-ikon
+│   ├── favicon.ico               # Favicon (32x32)
+│   ├── favicon.svg               # SVG favicon
+│   ├── icon-192.png              # PWA app ikon (192x192)
+│   ├── icon-512.png              # PWA app ikon (512x512)
+│   └── apple-touch-icon.png      # iOS app ikon (180x180)
 ├── css/
 │   └── styles.css                # Brugerdefineret styling
 ├── js/
@@ -93,11 +101,13 @@ Northwind.App.Frontend/
 │   └── components/
 │       ├── app-header.js         # Header-komponent
 │       ├── app-footer.js         # Footer-komponent
-│       ├── customer-table.js     # Kundeliste-tabel
+│       ├── customer-table.js     # Kundeliste-tabel med CRUD
 │       ├── customer-revenue-table.js  # Omsætningsdashboard-tabel
 │       └── form-text-input.js    # Genanvendelig formular-input
 └── .github/
-    └── github-instructions.md    # AI-assistent instruktioner
+    ├── copilot-instructions.md   # GitHub Copilot instruktioner
+    └── workflows/
+        └── deploy.yml            # Automatisk deployment til GitHub Pages
 ```
 
 ## 🧩 Web-komponenter
@@ -111,7 +121,13 @@ Navigations-header med logo og menu-links.
 Footer med copyright-information.
 
 ### `<customer-table>`
-Viser alle kunder i en tabel med CRUD-operationer.
+Viser alle kunder i en tabel med komplet CRUD-operationer (Create, Read, Update, Delete).
+
+**Funktioner:**
+- Opret nye kunder via "Create Customer" knap
+- Rediger eksisterende kunder
+- Slet kunder med bekræftelse
+- Responsiv tabel med Fomantic UI styling
 
 **Attributter:**
 - `limit` (valgfri) - Maksimalt antal kunder der skal vises
@@ -164,9 +180,11 @@ Applikationen bruger **Fomantic UI** til konsekvent styling:
 - Ikoner via Fomantic UI icon font
 - Brugerdefineret styling i [css/styles.css](css/styles.css)
 
-## 🧪 Kodekvalitet
+## 📱 Progressive Web App (PWA)
 
-### Linting-scripts
+Applikationen er bygget som en Progressive Web App og kan installeres på både desktop og mobile enheder.
+
+**🚨 VIGTIGT:** Kør altid lint før commit eller deployment!
 
 ```bash
 # Lint HTML
@@ -182,7 +200,59 @@ npm run lint:js
 npm run lint
 ```
 
-### Værktøjer
+Deployment til GitHub Pages vil fejle hvis linting ikke passerer.
+
+### Installation af PWA
+
+#### På Desktop (Chrome/Edge):
+
+1. Åbn applikationen i browseren
+2. Klik på install-ikonet i adresselinjen (eller "..." menu → "Install Northwind Traders")
+3. Appen åbnes i et selvstændigt vindue uden browser-chrome
+
+#### På Mobile (Android/iOS):
+
+1. Åbn applikationen i Safari (iOS) eller Chrome (Android)
+2. **iOS:** Tryk "Share" → "Add to Home Screen"
+3. **Android:** Tryk menu → "Add to Home Screen" eller følg installation-prompt
+4. Appen vises som et ikon på hjemmeskærmen
+
+### PWA Filer
+
+- `manifest.json` - Web app manifest med app-metadata
+- `sw.js` - Service worker (pass-through, ingen cache)
+- `assets/icon-192.png` - App ikon 192x192 (blå baggrund, hvidt "N")
+- `assets/icon-512.png` - App ikon 512x512 (blå baggrund, hvidt "N")
+- `assets/apple-touch-icon.png` - iOS specifikt ikon 180x180
+- `assets/favicon.ico` - Browser favicon
+
+### PWA Begrænsninger
+
+⚠️ **Bemærk:** Denne PWA har **ingen offline funktionalitet eller caching**. Applikationen kræver en aktiv internetforbindelse for at fungere, da den afhænger af backend API'en.
+
+Service workeren er minimal og implementerer kun grundlæggende install/activate events for at opfylde PWA-kravene, men cacher ikke ressourcer eller API-kald.
+
+## 🧪 Kodekvalitet
+
+### Linting-scripts
+
+```bash
+# Lint HTML
+npm run lint:html
+
+# Lint CSS
+npm run lint:css
+Progressive Web App** - Installerbar på alle platforme med manifest og service worker
+- ✅ **Separation of Concerns** - Komponenter, konfiguration og styling adskilt
+- ✅ **Genanvendelige Komponenter** - Web Components med brugerdefinerede attributter
+- ✅ **Moderne JavaScript** - ES6 moduler, klasser, async/await
+- ✅ **Fejlhåndtering** - Try/catch blokke og bruger-feedback
+- ✅ **Loading States** - Visuel feedback under API-kald
+- ✅ **Responsivt Design** - Mobile-first tilgang
+- ✅ **Kodekvalitet** - Linting og konsekvent kode-stil
+- ✅ **Semantisk HTML** - Korrekt brug af HTML5 elementer
+- ✅ **Tilgængelighed** - ARIA labels og semantiske tags
+- ✅ **CI/CD** - Automatisk deployment med linting-tjek
 
 - **ESLint** - JavaScript linting
 - **HTMLHint** - HTML validering
@@ -190,7 +260,11 @@ npm run lint
 
 ## 📄 Sider
 
-### Dashboard ([index.html](index.html))
+##Fulde CRUD-operationer:
+  - **Create** - Opret nye kunder via "Create Customer" knap
+  - **Read** - Vis alle kunder i tabel
+  - **Update** - Rediger kunde-information via modal
+  - **Delete** - Slet kunder med bekræftelsedex.html](index.html))
 - Viser top 5 kunder efter omsætning
 - Bruger `<customer-revenue-table>` komponenten
 
