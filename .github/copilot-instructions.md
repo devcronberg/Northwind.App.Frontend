@@ -338,5 +338,5 @@ Before completing any task:
 
 ---
 
-*Updated: January 12, 2026*
-*Version: 2.0 (with PWA support)*
+*Updated: January 24, 2026*
+*Version: 2.1 (Refined README and instructions)*

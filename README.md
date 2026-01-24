@@ -234,6 +234,12 @@ Service workeren er minimal og implementerer kun grundlæggende install/activate
 
 ## 🧪 Kodekvalitet
 
+Vi bruger automatiske værktøjer til at sikre høj kodekvalitet. Sørg for at køre disse før hver commit.
+
+- **ESLint** - Tjekker JavaScript for fejl og stil
+- **HTMLHint** - Tjekker HTML for korrekthed
+- **Stylelint** - Tjekker CSS for fejl
+
 ### Linting-scripts
 
 ```bash
@@ -242,46 +248,47 @@ npm run lint:html
 
 # Lint CSS
 npm run lint:css
-Progressive Web App** - Installerbar på alle platforme med manifest og service worker
-- ✅ **Separation of Concerns** - Komponenter, konfiguration og styling adskilt
-- ✅ **Genanvendelige Komponenter** - Web Components med brugerdefinerede attributter
-- ✅ **Moderne JavaScript** - ES6 moduler, klasser, async/await
-- ✅ **Fejlhåndtering** - Try/catch blokke og bruger-feedback
-- ✅ **Loading States** - Visuel feedback under API-kald
-- ✅ **Responsivt Design** - Mobile-first tilgang
-- ✅ **Kodekvalitet** - Linting og konsekvent kode-stil
-- ✅ **Semantisk HTML** - Korrekt brug af HTML5 elementer
-- ✅ **Tilgængelighed** - ARIA labels og semantiske tags
-- ✅ **CI/CD** - Automatisk deployment med linting-tjek
 
-- **ESLint** - JavaScript linting
-- **HTMLHint** - HTML validering
-- **Stylelint** - CSS linting
+# Lint JavaScript
+npm run lint:js
+
+# Kør alle tjek (påkrævet før deployment)
+npm run lint
+```
 
 ## 📄 Sider
 
-##Fulde CRUD-operationer:
-  - **Create** - Opret nye kunder via "Create Customer" knap
-  - **Read** - Vis alle kunder i tabel
-  - **Update** - Rediger kunde-information via modal
-  - **Delete** - Slet kunder med bekræftelsedex.html](index.html))
-- Viser top 5 kunder efter omsætning
-- Bruger `<customer-revenue-table>` komponenten
+### Dashboard ([index.html](index.html))
+- Viser velkomst og oversigt
+- Præsenterer top-kunder sorteret efter omsætning via `<customer-revenue-table>`
 
 ### Kundestyring ([customers.html](customers.html))
-- Komplet kundeliste
-- CRUD-operationer
-- Bruger `<customer-table>` komponenten
+- Hovedside for kunde-administration
+- Implementerer fuld CRUD (Create, Read, Update, Delete) via `<customer-table>`
+
+### Om ([about.html](about.html))
+- Information om projektet, teknologistakken og udviklingsprocessen
 
 ## 🔧 Konfiguration
 
 ### API-konfiguration
 
-Rediger [js/config/settings.js](js/config/settings.js) for at ændre API URL:
+API-endepunkter er konfigureret i [js/config/settings.js](js/config/settings.js).
+
+Standardkonfigurationen peger på den live backend:
 
 ```javascript
 export const API_CONFIG = {
-    BASE_URL: 'http://localhost:5000/api',  // Til lokal backend
+    BASE_URL: 'https://northwind-backend-b088.onrender.com/api',
+    TIMEOUT: 30000,
+};
+```
+
+For lokal udvikling med [Northwind.App.Backend](https://github.com/devcronberg/Northwind.App.Backend), ændr URL'en til:
+
+```javascript
+export const API_CONFIG = {
+    BASE_URL: 'http://localhost:5000/api',
     TIMEOUT: 30000,
 };
 ```
