@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Northwind Traders Authentication - Login and access protected customer data">
+    <meta name="theme-color" content="#2185d0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Northwind Traders - Authentication</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+    <!-- Fomantic UI CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- Header Component -->
+    <app-header></app-header>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+        <div class="ui container">
+            <section aria-labelledby="auth-heading">
+                <div class="ui segment">
+                    <h1 id="auth-heading" class="ui header">
+                        <i class="lock icon" aria-hidden="true"></i>
+                        <div class="content">
+                            Authentication Demo
+                            <div class="sub header">Login to access protected customer endpoints</div>
+                        </div>
+                    </h1>
+                </div>
+
+                <div class="ui stackable two column grid">
+                    <!-- Login Section -->
+                    <div class="column">
+                        <login-form></login-form>
+                    </div>
+
+                    <!-- Protected Data Section -->
+                    <div class="column">
+                        <protected-customers></protected-customers>
+                    </div>
+                </div>
+
+                <!-- Information Section -->
+                <div class="ui info message">
+                    <div class="header">
+                        <i class="info circle icon" aria-hidden="true"></i>
+                        How Authentication Works
+                    </div>
+                    <ul class="list">
+                        <li><strong>Public Endpoints:</strong> No authentication required (e.g.,
+                            <code>/api/public/customers</code>)</li>
+                        <li><strong>Protected Endpoints:</strong> Require JWT token in Authorization header (e.g.,
+                            <code>/api/customers</code>)</li>
+                        <li><strong>Login:</strong> POST credentials to <code>/api/auth/login</code> to receive a JWT
+                            token</li>
+                        <li><strong>Token Usage:</strong> Include token as <code>Bearer {token}</code> in Authorization
+                            header</li>
+                        <li><strong>Token Storage:</strong> Stored in browser localStorage</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer Component -->
+    <app-footer></app-footer>
+
+    <!-- jQuery (required for Fomantic UI) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <!-- Fomantic UI JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
+
+    <!-- App Components -->
+    <script type="module" src="js/components/app-header.js"></script>
+    <script type="module" src="js/components/app-footer.js"></script>
+    <script type="module" src="js/components/login-form.js"></script>
+    <script type="module" src="js/components/protected-customers.js"></script>
+    <script type="module" src="js/app.js"></script>
+</body>
+
+</html>

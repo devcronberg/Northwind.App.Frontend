@@ -11,6 +11,7 @@ En moderne vanilla JavaScript frontend-applikation, der demonstrerer bedste prak
 - ✅ **API-integration** - REST API-klient til Northwind backend
 - ✅ **Kunde Dashboard** - Top-kunder sorteret efter omsætning
 - ✅ **Kundestyring** - Komplet CRUD-operationer for kunder (Create, Read, Update, Delete)
+- ✅ **JWT Autentificering** - Login-system og adgang til beskyttede endpoints
 - ✅ **Kodekvalitetsværktøjer** - ESLint, HTMLHint og Stylelint
 - ✅ **Modulær Arkitektur** - Organiseret komponentstruktur
 
@@ -81,6 +82,7 @@ Naviger til: `http://localhost:8080`
 Northwind.App.Frontend/
 ├── index.html                    # Dashboard-side
 ├── customers.html                # Kundestyring-side
+├── auth.html                     # Autentificering-side (JWT login demo)
 ├── about.html                    # Om-side
 ├── manifest.json                 # PWA web app manifest
 ├── sw.js                         # Service worker (minimal, ingen cache)
@@ -102,6 +104,8 @@ Northwind.App.Frontend/
 │       ├── app-header.js         # Header-komponent
 │       ├── app-footer.js         # Footer-komponent
 │       ├── customer-table.js     # Kundeliste-tabel med CRUD
+│       ├── login-form.js         # Login-formular med JWT
+│       ├── protected-customers.js     # Beskyttet endpoint demo
 │       ├── customer-revenue-table.js  # Omsætningsdashboard-tabel
 │       └── form-text-input.js    # Genanvendelig formular-input
 └── .github/
@@ -143,13 +147,41 @@ Genanvendelig formular-inputfelt-komponent.
 
 **Attributter:**
 - `label` - Feltetiket
+
+### `<login-form>`
+Login-formular til JWT-autentificering.
+
+**Funktioner:**
+- Login med email og password
+- Token-lagring i localStorage
+- Logout-funktionalitet
+- Visuel feedback ved login/logout
+
+### `<protected-customers>`
+Demonstrerer adgang til beskyttede API-endpoints med JWT token.
+
+**Funktioner:**
+- Fetch kunder fra beskyttet endpoint
+- Automatisk inkludering af Authorization header
+- Fejlhåndtering for udløbne/ugyldige tokens
+- Viser kundedata i tabel
 - `name` - Formularfeltnavn
-- `required` (valgfri) - Om feltet er påkrævet
-- `placeholder` (valgfri) - Pladsholdertekst
+#### Public Endpoints (ingen autentificering påkrævet)
+- `GET /api/public/customers` - Hent alle kunder
+- `GET /api/public/customers-with-revenue` - Hent kunder med omsætning
+- `GET /api/public/customers/{id}` - Hent specifik kunde
+- `POST /api/public/customers` - Opret ny kunde
+- `PUT /api/public/customers/{id}` - Opdater kunde
+- `DELETE /api/public/customers/{id}` - Slet kunde
 
-## 🌐 API-integration
+#### Auth Endpoints
+- `POST /api/auth/login` - Login og modtag JWT token
+  - Request body: `{ "username": "string", "password": "string" }`
+  - Response: `{ "token": "jwt-token-string" }`
 
-Applikationen integrerer med Northwind Backend API:
+#### Protected Endpoints (kræver JWT token)
+- `GET /api/customers` - Hent kunder (kræver Authorization header)
+  - Header: `Authorization: Bearer {token}`:
 
 ### Konfiguration
 
@@ -236,7 +268,13 @@ Service workeren er minimal og implementerer kun grundlæggende install/activate
 
 Vi bruger automatiske værktøjer til at sikre høj kodekvalitet. Sørg for at køre disse før hver commit.
 
-- **ESLint** - Tjekker JavaScript for fejl og stil
+- **Autentificering ([auth.html](auth.html))
+- JWT-baseret autentificering demo
+- Login-formular med token-lagring
+- Fetch beskyttede kunde-endpoints med Authorization header
+- Demonstrerer forskel mellem public og protected endpoints
+
+### ESLint** - Tjekker JavaScript for fejl og stil
 - **HTMLHint** - Tjekker HTML for korrekthed
 - **Stylelint** - Tjekker CSS for fejl
 

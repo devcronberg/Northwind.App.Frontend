@@ -20,6 +20,10 @@ class AppHeader extends HTMLElement {
             <i class="users icon" aria-hidden="true"></i>
             Customers
           </a>
+          <a href="auth.html" class="item" aria-label="Authentication">
+            <i class="lock icon" aria-hidden="true"></i>
+            Auth
+          </a>
           <a href="about.html" class="item" aria-label="About us">
             <i class="info circle icon" aria-hidden="true"></i>
             About
