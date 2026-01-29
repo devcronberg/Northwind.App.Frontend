@@ -320,10 +320,10 @@ class CustomerTable extends HTMLElement {
                 <td>${customer.city || 'N/A'}</td>
                 <td>${customer.country || 'N/A'}</td>
                 <td class="center aligned">
-                  <button type="button" class="ui small primary button edit-btn" data-id="${customer.customerId}" aria-label="Edit ${customer.customerName || 'customer'}">
+                  <button type="button" class="ui small button pink-btn edit-btn" data-id="${customer.customerId}" aria-label="Edit ${customer.customerName || 'customer'}">
                     <i class="edit icon" aria-hidden="true"></i>Edit
                   </button>
-                  <button type="button" class="ui small red button delete-btn" data-id="${customer.customerId}" aria-label="Delete ${customer.customerName || 'customer'}">
+                  <button type="button" class="ui small button black-btn delete-btn" data-id="${customer.customerId}" aria-label="Delete ${customer.customerName || 'customer'}">
                     <i class="trash icon" aria-hidden="true"></i>Delete
                   </button>
                 </td>

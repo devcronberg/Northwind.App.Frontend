@@ -47,3 +47,22 @@ body {
 .skip-to-main:focus {
     top: 0;
 }
+
+/* Custom button colors */
+.ui.button.pink-btn {
+    background-color: #ff1493 !important;
+    color: white !important;
+}
+
+.ui.button.pink-btn:hover {
+    background-color: #ff69b4 !important;
+}
+
+.ui.button.black-btn {
+    background-color: #000 !important;
+    color: white !important;
+}
+
+.ui.button.black-btn:hover {
+    background-color: #333 !important;
+}

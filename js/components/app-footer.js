@@ -17,7 +17,7 @@ class AppFooter extends HTMLElement {
           <div class="ui stackable grid">
             <div class="eight wide column">
               <h4 class="ui inverted header">Northwind Traders</h4>
-              <p>&copy; ${currentYear} Northwind Traders. Demo Application for Educational Purposes.</p>
+              <p>&copy; ${currentYear} xxxx Northwind Traders. Demo Application for Educational Purposes.</p>
             </div>
             <div class="eight wide right aligned column">
               <div class="ui inverted link list">
